@@ -1,126 +1,88 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ContactElements } from '../data'
 import styled from 'styled-components'
+import { useContext } from 'react'
+import { BackgroundContext } from '../untils/context'
+import { colors } from '../untils/colors'
+import { polices } from '../untils/polices'
+import Formulaire from './Formulaire'
+import Coordonnees from './Coordonnees'
+
+const Container = styled.div`
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+`
+
+const Head = styled.div`
+  margin-bottom: 2.5rem;
+`
+
+const Title = styled.h2`
+  font-family: ${polices.main};
+  margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: 1.625rem;
+  @media (min-width: 992px) {
+    font-size: 2rem;
+  }
+`
+
+const Paragraph = styled.p`
+  font-family: ${polices.second};
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+`
+
+const bgCover =
+  'https://preview.erilisdesign.com/html/lana/assets/images/image-14.jpg'
 
 function Contact() {
-  const [isVisible, SetIsVisible] = useState(false)
-  useEffect(() => {
-    const handleScroll = () => {
-      const contactElem = document.getElementById('contact')
-      const top = contactElem.getBoundingClientRect().top
-      if (top < window.innerHeight && top > 0) {
-        SetIsVisible(true)
-      }
-    }
+  const { back } = useContext(BackgroundContext)
 
-    handleScroll()
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
   const ContactSection = styled.section`
-    background-image: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=326&q=80');
+    background-image: url(${back ? '' : bgCover});
     background-size: cover;
     background-position: center;
     position: relative;
     color: white;
-    padding: 75px 0 75px 0;
+    padding: 80px 0;
+    @media (min-width: 1200px) {
+      padding: 80px 5%;
+    }
   `
 
-  const Div = styled.div`
+  const Hover = styled.div`
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(62, 93, 220, 0.9);
+    background-color: ${colors.homeHoverBgColor};
+    opacity: ${back ? '0' : '0.9'};
   `
 
-  const ContactContent = styled.div`
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-  `
   return (
     <React.Fragment>
       <ContactSection id="contact">
-        <ContactContent className="container my-5">
-          <div className="col-12 col-xl-6 mb-5 mb-xl-0 animate__animated animate__fadeInUp animate__slow">
-            <h1>Contact Us</h1>
-            <p>
+        <Container className="container">
+          <Head className="col-12 col-xl-6 animate__animated animate__fadeInUp animate__slow">
+            <Title>Contact Us</Title>
+            <Paragraph>
               Want to say hello? Want to know more about us? Give us a call or
               drop us an email and we will get back to you as soon as we can.
-            </p>
-          </div>
+            </Paragraph>
+          </Head>
           <div className="row ">
-            <div className="col-12 col-lg mb-0 mb-md-5 mb-lg-0">
-              <span className="row">
-                {ContactElements.map(({ id, icone, text }) => (
-                  <div
-                    className="col-8 col-md-4 col-lg-6 mb-4 animate__animated animate__fadeInUp animate__delay-1s"
-                    key={id}
-                  >
-                    <i className={`bi ${icone} fs-1`} />
-                    <p>{text}</p>
-                  </div>
-                ))}
-              </span>
-            </div>
-
-            <div className="col-12 col-lg">
-              <form className="animate__animated animate__fadeInUp animate__slow">
-                <div className="row">
-                  <div className="mb-3 col-12 col-md-6">
-                    <input
-                      placeholder="Enter your name"
-                      type="text"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                    />
-                  </div>
-                  <div className="mb-3 col-12 col-md-6">
-                    <input
-                      placeholder="Enter your email"
-                      type="email"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                    />
-                  </div>
-                  <div className="mb-3 col-12">
-                    <input
-                      placeholder="Subject"
-                      type="text"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                    />
-                  </div>
-                  <div className="mb-3 col-12">
-                    <textarea
-                      className="form-control"
-                      rows={8}
-                      placeholder="Your message"
-                    ></textarea>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Send message
-                </button>
-              </form>
-            </div>
+            <Coordonnees array={ContactElements} />
+            <Formulaire />
           </div>
-        </ContactContent>
-        <Div></Div>
+        </Container>
+        <Hover />
       </ContactSection>
     </React.Fragment>
   )

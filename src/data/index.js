@@ -5,6 +5,8 @@ import build from '../assets/44.png'
 import bridge from '../assets/55.png'
 
 export const site = 'L A N A'
+export const logo =
+  'https://preview.erilisdesign.com/html/lana/assets/images/logo.png'
 
 export const navElements = [
   {
@@ -143,24 +145,48 @@ export const WorksElements = [
   },
 ]
 
+const phoneNumber = () => {
+  return (
+    <>
+      (0091) 1111 1234567 <br /> (084) 2222 1234567
+    </>
+  )
+}
+
+const location = () => {
+  return (
+    <>
+      69 Halsey St, New York, Ny
+      <br />
+      10002,
+      <br /> United States
+    </>
+  )
+}
+
+const mail = () => {
+  return (
+    <>
+      support@example.com <br /> hello@example.com
+    </>
+  )
+}
+
 export const ContactElements = [
   {
     id: 'phone',
     icone: 'bi-phone',
-    text: `(0091) 1111 1234567 -
-    (084) 2222 1234567`,
+    text: phoneNumber(),
   },
   {
     id: 'geo',
     icone: 'bi-geo-alt',
-    text: `69 Halsey St, New York, Ny 10002,
-    United States`,
+    text: location(),
   },
   {
     id: 'envelope',
     icone: 'bi-envelope',
-    text: `support@example.com
-    hello@example.com`,
+    text: mail(),
   },
 ]
 
@@ -168,27 +194,22 @@ export const FooterElements = [
   {
     id: 'facebook',
     icone: 'bi-facebook',
-    href: '',
   },
   {
     id: 'twitter',
     icone: 'bi-twitter',
-    href: '',
   },
   {
     id: 'google',
     icone: 'bi-google',
-    href: '',
   },
   {
     id: 'linkedin',
     icone: 'bi-linkedin',
-    href: '',
   },
 
   {
     id: 'youtube',
     icone: 'bi-youtube',
-    href: '',
   },
 ]

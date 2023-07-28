@@ -1,99 +1,121 @@
-import React, { useEffect, useState } from 'react'
-import { navElements, site } from '../data'
-import styled from 'styled-components'
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
+import { logo, navElements } from '../data'
+import { polices } from '../untils/polices'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { colors } from '../untils/colors'
+
+const slideDownAnimation = keyframes`
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`
+
+const Navbar = styled.nav``
 
 function Header() {
-  const [isAtTop, setIsAtTop] = useState(true)
-  const [menu, setMenu] = useState(false)
-  const menuState = (e) => {
-    e.preventDefault()
-    setMenu(!menu ? true : false)
-  }
+  const [top, setTop] = useState(true)
 
   useEffect(() => {
     function handleScroll() {
-      if (window.pageYOffset === 0) {
-        setIsAtTop(true)
-      } else {
-        setIsAtTop(false)
-      }
+      const isTop = window.scrollY === 0
+      setTop(isTop ? true : false)
     }
+
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
-  const Span = styled.span`
+  const Navigation = styled.nav`
     position: fixed;
-    @media (max-width: 767px) {
-      background-color: ${isAtTop && menu ? 'rgba(0, 0, 0, 0.7)' : null};
-    }
-    background-color: ${isAtTop ? 'transparent' : 'rgba(255, 255, 255, 0.9)'};
-  `
-
-  const ListLink = styled.a`
-    color: ${isAtTop ? 'white' : 'black'};
-    opacity: ${isAtTop ? '1' : '0.7'};
-    text-decoration: none;
-    transition: color 600ms, opacity 400ms;
-    &:hover {
-      opacity: ${isAtTop ? '0.8' : '1'};
-      color: ${isAtTop ? 'white' : 'black'};
-    }
-  `
-  const SiteLink = styled.a`
-    text-decoration: none;
-    font-size: 2em;
-    font-weight: 900;
-    color: ${isAtTop ? 'white' : 'black'};
-    &:hover {
-      color: ${isAtTop ? 'white' : 'black'};
-    }
-  `
-
-  const DivHeader = styled.div`
-    color: white;
-    z-index: 9;
-    position: relative;
+    z-index: 3;
     top: 0;
-    bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    @media (min-width: 992px) {
+      animation: ${slideDownAnimation} 1s ease-in-out;
+      background-color: ${top ? 'transparent' : 'white'};
+    }
+
+    @media (min-width: 1400px) {
+      padding-left: 9rem;
+      padding-right: 9rem;
+    }
   `
-  const ListDiv = styled.div`
-    @media (max-width: 768px) {
-      border-top: solid 2px ${!isAtTop ? 'black' : 'white'};
-      padding-top: 10px;
+
+  const Link = styled.a`
+    font-family: ${polices.second};
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    @media (min-width: 992px) {
+      color: ${top ? 'white' : colors.LinkColorIfTopIsFalse};
+    }
+    &:hover {
+      color: ${top
+        ? colors.LinkHoverColorIfTopIsTrue
+        : colors.LinkHoverColorIfTopIsFalse};
+    }
+
+    &:focus {
+      color: ${top
+        ? colors.LinkHoverColorIfTopIsTrue
+        : colors.LinkHoverColorIfTopIsFalse};
     }
   `
 
   return (
     <React.Fragment>
-      <DivHeader>
-        <Span className="row align-items-center  w-100 p-2 p-lg-4">
-          <div className="col-12  col-lg-4 text-center text-lg-start">
-            <SiteLink href="#" className="d-none d-md-block">
-              {site}
-            </SiteLink>
-            <SiteLink
-              href="#"
-              className="d-block d-md-none"
-              onClick={(e) => menuState(e)}
-            >
-              {site}
-            </SiteLink>
+      <Navigation className="row">
+        <div>
+          <div className="container">
+            <Navbar className=" row navbar navbar-expand-lg bg-body-tertiary">
+              <div className="container-fluid">
+                <div className=" col-5 col-xl-6">
+                  <a className="navbar-brand" href="/">
+                    <img src={logo} alt="logo" />
+                  </a>
+                </div>
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div
+                  className="collapse navbar-collapse col"
+                  id="navbarSupportedContent"
+                >
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    {navElements.map(({ id, title, href }) => (
+                      <li className="nav-item" key={id}>
+                        <Link className="nav-link" href={href}>
+                          {title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Navbar>
           </div>
-          <div className="col-12  col-lg">
-            <ListDiv className="d-lg-none" />
-            <span className={menu ? '' : 'd-none d-md-block'}>
-              <ul className=" list-unstyled row text-center ">
-                {navElements.map(({ id, title, href }) => (
-                  <li key={id} className="col-6 mb-2 mb-md-0 col-md">
-                    <ListLink href={href}>{title}</ListLink>
-                  </li>
-                ))}
-              </ul>
-            </span>
-          </div>
-        </Span>
-      </DivHeader>
+        </div>
+      </Navigation>
     </React.Fragment>
   )
 }

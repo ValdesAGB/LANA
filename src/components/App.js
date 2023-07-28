@@ -9,28 +9,36 @@ import Works from './Works'
 import Contact from './Contact'
 import Footer from './Footer'
 import Networks from './Networks'
+import { BackgroundProvider } from '../untils/context'
+import Button from './Button'
+import BgRecode from './BgRecode'
+import { polices } from '../untils/polices'
+
+const GlobalStyle = createGlobalStyle`
+*{
+  font-family:${polices.main};
+}
+`
 
 function App() {
-  const GlobalStyle = createGlobalStyle`
-  *{
-
-    font-family:Montserrat;
-  }
-  `
   return (
     <React.Fragment>
       <GlobalStyle />
-      <Header />
-      <main className="row">
-        <Home />
-        <Missions />
-        <Do />
-        <Solutions />
-        <Works />
-        <Contact />
-      </main>
-      <Footer />
-      <Networks />
+      <BackgroundProvider>
+        <Button />
+        <Header />
+        <main className="row">
+          <BgRecode />
+          <Home />
+          <Missions />
+          <Do />
+          <Solutions />
+          <Works />
+          <Contact />
+        </main>
+        <Footer />
+        <Networks />
+      </BackgroundProvider>
     </React.Fragment>
   )
 }
