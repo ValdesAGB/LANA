@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/LANA/static/css/main.321f33b0.css",
+    "main.js": "/LANA/static/js/main.aad8d2bd.js",
+    "static/media/bg.mp4": "/LANA/static/media/bg.3b0d9b9e86a2a999fbe4.mp4",
+    "static/media/44.png": "/LANA/static/media/44.ea62e07037b913e1628e.png",
+    "static/media/55.png": "/LANA/static/media/55.3663b7129a2901f77b62.png",
+    "static/media/11.png": "/LANA/static/media/11.dfb4c2f1fd6e2ccf0b87.png",
+    "static/media/33.png": "/LANA/static/media/33.8e76116ce615752cd83c.png",
+    "static/media/22.png": "/LANA/static/media/22.77207cf363ae7c1b50cf.png",
+    "index.html": "/LANA/index.html",
+    "main.321f33b0.css.map": "/LANA/static/css/main.321f33b0.css.map",
+    "main.aad8d2bd.js.map": "/LANA/static/js/main.aad8d2bd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.321f33b0.css",
+    "static/js/main.aad8d2bd.js"
+  ]
+}
